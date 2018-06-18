@@ -48,8 +48,16 @@ const store = (function () {
     store.items.splice(index, 1);
   }
 
+  function toggleCheckedFilter() {
+    this.hideCheckedItems = !this.hideCheckedItems;
+  }
+
+  function setSearchTerm(val) {
+    this.searchTerm = val;
+  }
+
   return {
-    items: items, findById, addItem, findAndToggleChecked, findAndUpdateName, findAndDelete, deleteListItem,
+    items: items, findById, addItem, findAndToggleChecked, findAndUpdateName, findAndDelete, deleteListItem, toggleCheckedFilter, setSearchTerm,
   };
 
 }());
