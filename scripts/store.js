@@ -1,19 +1,55 @@
 'use strict';
 
-/* global cuid, $ */
+/* global cuid, Item, $ */
 
 const store = (function () {
+  const items = [];
+  let hideCheckedItems = false;
+  let searchTerm = '';
+
+  function findById(id) {
+    return store.items.find(x => x.id === id);
+  }
+
+  function addItem(name) {
+    try {
+      Item.validateName(name);
+      Item.create(name);
+    }
+    catch(error) {
+      console.log(`Cannot add item: ${error.message} for now.`);
+    }
+  }
+
+  function findAndToggleChecked(id) {
+    const foundItem = findById(id);
+    console.log('checked!');
+    foundItem.checked = !foundItem.checked;
+  } 
+
+  function findAndUpdateName(id, newName) {
+    try {
+      Item.validateName(newName);
+    }
+    catch(error){
+      console.log(`Cannot update name: ${error.message}.`);
+    }
+    findById(id).name = newName;
+  }
+
+  function findAndDelete(id) {
+    this.items.findIndex(x => x.id === id);
+    store.items.splice(id, 1);
+  }
+
+  
+  function deleteListItem(id) {
+    const index = store.items.findIndex(item => item.id === id);
+    store.items.splice(index, 1);
+  }
 
   return {
-    items: [
-      { id: cuid(), name: 'apples', checked: false },
-      { id: cuid(), name: 'oranges', checked: false },
-      { id: cuid(), name: 'milk', checked: true },
-      { id: cuid(), name: 'bread', checked: false }
-    ],
-
-    hideCheckedItems: false,
-    searchTerm: ''
+    items: items, findById, addItem, findAndToggleChecked, findAndUpdateName, findAndDelete, deleteListItem,
   };
 
-}() );
+}());
