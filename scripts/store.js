@@ -1,5 +1,7 @@
 'use strict';
 
+/* global cuid, $ */
+
 const store = (function () {
 
   return {

@@ -1,5 +1,5 @@
 'use strict';
-
+/* global store, cuid, $ */
 const Item = (function () {
 
   const validateName = function(name) {
@@ -8,6 +8,7 @@ const Item = (function () {
     }
   };
   const create = function(name) {
+    store.items.push({ id: cuid(), name: name, checked: false });
     return {
       id: cuid(),
       name: name,
